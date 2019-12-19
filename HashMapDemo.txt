@@ -1,0 +1,93 @@
+//*********************** Class HashMap ***********************
+
+/*
+	Class : HashMap<K,V>
+	Implements : Serializable, Cloneable, Map
+	Parameters : K - Type of Keys, V - Type of Values
+
+
+	-> The underlying Data Structure used in HashMap is Hash table!
+	-> HashMap is same as class Hashable, except that HashMap is unsynchronized and permits nulls.
+	-> Insertion order is not preserved. It is based on hashcode generated for each key.
+	-> Duplicate keys are not allowed, but values can be duplicated.
+	-> Heterogeneous (different types like String, Integer etc.) objects are allowed for both Key and Values.
+	-> Null is allowed only once for Key. (Null not allowed in Hashtable class)
+	-> Null can be used multiple time for value. (Null not allowed in Hashtable class)
+	-> HashMap implements Cloneable, Serializable interface.
+	-> HashMap is the best choice if our frequent operation is search operation.
+	-> An object of HashMap is created with an initial capacity of (16) and load factor(default 0.75).
+	
+*/
+
+//*********************** HashMap Demo ***********************
+
+import java.util.HashMap;
+
+public class HashMapDemo{
+
+	public static void main(String []args){
+	
+		//************ Constructors ************
+
+		//Deprecated - HashMap hashMap1 = new HashMap();			
+		//Deprecated - HashMap hashMap2 = new HashMap(10);			
+		//Deprecated - HashMap hashMap3 = new HashMap(8, 0.5f);		
+		//Deprecated - HashMap hashMap4 = new HashMap(hashMap1);
+
+		//For using a specific pair of object types
+		HashMap<Integer, String> hashMap5 = new HashMap<Integer, String>();			//1. new HashMap() - default constructor
+		HashMap<Integer, String> hashMap6 = new HashMap<Integer, String>(10);			//2. new HashMap(int initialCapacity) - set capacity according to your need.
+		HashMap<Integer, String> hashMap7 = new HashMap<Integer, String>(8,0.5f);		//3. new HashMap(int initialCapacity, flaot load_factor) - set capacity and fill ratio, according to your need.
+		HashMap<Integer, String> hashMap8 = new HashMap<Integer, String>(hashMap5);		//4. new HashMap(Map map) - Creates hash map by using the elements of the given Map object map as parameter.
+	
+		
+		//************ Public Methods ************
+	
+		System.out.println("\n************ Public Methods ************");
+	
+		System.out.println("Size of Hashmap5 : "+hashMap5.size());		//public int size() - returns size of map
+		System.out.println("Size of Hashmap7 : "+hashMap7.size());
+
+		System.out.println("HashMap3 is Empty? : "+hashMap5.isEmpty());		//public boolean isEmpty() - returns whether map is empty or not
+
+		System.out.println(hashMap5.put(1,"Rupali"));				//If an existing key is passed then the previous value gets returned. If a new pair is passed, then NULL is returned.
+		System.out.println(hashMap5.put(1,"Ani"));				//here it returns previous value before replacing with new value
+
+		System.out.println("hashMap5 object : "+hashMap5);			//Content of HashMap
+		System.out.println(hashMap5.containsKey(1));				//public boolean containsKey(Key) - Used to return true if one or more key is mapped to a specified value.
+	
+		System.out.println(hashMap5.get(1));					//public boolean get(Key) - It is used to retrieve or fetch the value mapped by a particular key.
+
+		hashMap5.put(4,"Mrunali");
+		hashMap5.put(7,"Swara");
+		hashMap5.put(22,"Pranav");
+		hashMap5.put(18,"Shubham");
+		System.out.println("hashMap5 object : "+hashMap5);			//ordered by key % initialCapacity, in this case key%16
+
+
+		System.out.println(hashMap5.remove(1));					//public V remove(Key) - It is used to remove the values for any particular key in the Map.
+		System.out.println("hashMap5 object : "+hashMap5);
+
+		hashMap6.putAll(hashMap5);
+		System.out.println("hashMap6 object : "+hashMap6);			//public void putAll(Map map) - copy all of the elements from one map into another.
+
+		hashMap5.clear();
+		System.out.println("hashMap5 object : "+hashMap5);			//public void clear() - delete all mappings in map.
+
+		System.out.println("Does hashMap6 contain Ani : "+hashMap6.containsValue("Ani"));  //public boolean containsValue(Value) - return true if one or more key is mapped to a specified value.
+
+		
+		System.out.println(hashMap6.getOrDefault(9,"Default"));			//public Value getOrDefault(Key, defaultValue) - returns the value to which the specified key is mapped, or defaultValue if this map contains no mapping for the key.
+		System.out.println(hashMap6.getOrDefault(7,"Default"));
+		
+		System.out.println(hashMap6.getOrDefault(1,"Ani"));			//public V putIfAbsent(Key, Value) - If the specified key is not already associated with a value (or is mapped to null) associates it with the given value and returns null, else returns the current value.
+		System.out.println("hashMap6 object : "+hashMap6);
+
+		System.out.println(hashMap6.replace(22,"Shubham","Ani"));		//public boolean replace(Key key, Value oldValue, Value newValue) - replaces the entry for the specified key only if currently mapped to the specified value
+		System.out.println(hashMap6.replace(22,"Pranav","Ani"));
+		System.out.println("hashMap6 object : "+hashMap6);
+
+		System.out.println(hashMap6.replace(7,"Swaranjali"));			//public oldValue replace(Key key, Value newValue) - replaces the entry for the specified key only if it is currently mapped to some value.
+		System.out.println("hashMap6 object : "+hashMap6);
+	}
+}

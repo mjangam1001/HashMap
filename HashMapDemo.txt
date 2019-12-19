@@ -29,10 +29,10 @@ public class HashMapDemo{
 	
 		//************ Constructors ************
 
-		//Deprecated - HashMap hashMap1 = new HashMap();			
-		//Deprecated - HashMap hashMap2 = new HashMap(10);			
-		//Deprecated - HashMap hashMap3 = new HashMap(8, 0.5f);		
-		//Deprecated - HashMap hashMap4 = new HashMap(hashMap1);
+		 HashMap hashMap1 = new HashMap();			
+		 HashMap hashMap2 = new HashMap(10);			
+		 HashMap hashMap3 = new HashMap(8, 0.5f);		
+		 HashMap hashMap4 = new HashMap(hashMap1);
 
 		//For using a specific pair of object types
 		HashMap<Integer, String> hashMap5 = new HashMap<Integer, String>();			//1. new HashMap() - default constructor

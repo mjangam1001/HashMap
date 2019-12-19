@@ -1,0 +1,36 @@
+Map Interface	:
+			-> Not a child interface of collection interface
+			-> Key-Value Pair
+			-> Collection of entries
+			-> Duplicate keys are not allowed
+			-> Duplicate values can be used
+
+
+HashMap		:
+			-> Uses Hashing
+			-> Duplicate keys are not allowed 
+			-> Duplicate value are allowed
+			-> Null Key and null values are allowed
+		
+					Methods :
+					-> public object put(object key, object value)
+					-> public void putAll(Map map)
+					-> public object get(object key)
+					-> public object remove(object key)
+					-> public boolean containsKey(object key) 
+					-> public boolean containsValue(object value) 
+					-> public int size();
+					-> public boolean isEmpty()
+					-> public void clear()
+
+					Collection views of map
+					-> public Set keySet()
+					-> public Set entrySet()
+					-> public Collection values()
+					
+
+LinkedHashMap	:	
+			-> Child of HashMap
+			-> Order of insertion is preserved			
+			-> Underlying data structure is linkedlist + hashtable
+

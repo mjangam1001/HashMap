@@ -1,0 +1,217 @@
+//Demo of additional methods of HashMap used for conversion of HashMap to Set/Collection objects.
+
+import java.util.*;
+
+class HashMapDemo2{
+	public static void main(String []args){
+		HashMap<Integer,String> hashMap = new HashMap<>();
+		hashMap.put(4,"Animesh");
+		hashMap.put(22,"Mrunali");
+		hashMap.put(7,"Swara");
+		hashMap.put(18,"Pranav");
+		hashMap.put(19,"Shubham");
+		System.out.println("\nHashMap : "+hashMap);
+
+
+		Set s = hashMap.keySet();				//public Set<K> keySet() - create a set out of the key elements contained in the HashMap
+		System.out.println("\nSet of keys : "+s);
+
+		Collection c = hashMap.values();			//public Collection<V> values() - create a collection out of the values of the HashMap
+		System.out.println("\nCollection of values : "+c);
+
+		Set s1 = hashMap.entrySet();				//public Set<Map$Entry<K, V>> entrySet() - return a set view of the hash map (here the Set contains object of an Inner Class called Map$Entry which contains the 										Key-Value of the HashMap)
+		System.out.println("\n"+s1+"\n");
+
+
+
+		/*Iterator is a Cursor, which is used to iterate or traverse or retrieve a Collection or Stream object's elements one by one.
+		  There are 4 cursors in Java, all of which are Interface : 1. Enumeration
+									    2. Iterator
+									    3. List Iterator
+									    4. Spliterator
+		  -> Iterator is applicable for all Collection classes. So it is also known as Universal Java Cursor.
+		  -> Iterator supports both read and remove Operations.
+		*/
+
+		Iterator itr = hashMap.entrySet().iterator();
+		while(itr.hasNext()){
+			Map.Entry map1 = (Map.Entry)itr.next();
+			System.out.println(map1.getKey()+" = "+map1.getValue());
+		}
+	}
+}
+
+
+
+//*********************** Class IdentityHashMap ***********************
+
+/*
+	Class : IdentityHashMap<K,V>
+	Extends : AbstractMap
+	Implements : Serializable, Cloneable, Map
+	Parameters : K - Type of Keys, V - Type of Values
+
+	->Child class of AbstractMap. Methods and constructors are almost same as HashMap except:
+		* In case of HashMap, JVM will use equals() method to identify duplicate keys which is meant for content comparison but in the case of IdentityHashMap, 
+		  JVM will use == operator to identify duplicate keys which is meant for reference comparison.
+		* This class is used when the user requires the objects to be compared via reference. (Rarely)
+*/
+
+//***********************IdentityHashMap Demo ***********************
+
+import java.util.*;
+
+class IdentityHashMapDemo{
+	public static void main(String []args){
+		
+		String str1 = new String("One");
+		String str2 = new String("One");
+		
+		IdentityHashMap<String,String> ihm = new IdentityHashMap<String,String>();
+		ihm.put(str1,"Animesh");
+		ihm.put(str2,"Ani");				//Here str1 and str2 are duplicate keys but as IdentityHashMap checks reference using == operator, thus str1 and str2 are different and therefore two entries are allowed
+
+		HashMap<String,String> hm = new HashMap<String,String>();
+		hm.put(str1,"Animesh");
+		hm.put(str2,"Ani");				//Here also str1 and str2 are duplicate keys but HashMap checks object content using equals() method, thus str1 and str2 are same and therefore two entries are not allowed
+
+		System.out.println("IdentityHashMap : "+ihm);
+		System.out.println("HashMap : "+hm);
+	}
+}
+
+
+
+//*********************** Class LinkedHashMap ***********************
+
+/*
+	Class : LinkedHashMap<K,V>
+	Extends : HashMap
+	Implements : Serializable, Cloneable, Map
+	Parameters : K - Type of Keys, V - Type of Values
+
+	->Child class of HashMap. Methods and constructors are almost same as HashMap except:
+		* Underlying data Structure in HashMap is Hash Table, while in LinkedHashMap it is a combination of Linked List(Doubly) and Hash Table.
+		* Insertion order is preserved in LinkedHashMap whereas in HashMap it's not preserved.
+*/
+
+//*********************** LinkedHashMap Demo ***********************
+
+import java.util.*;
+
+class LinkedHashMapDemo{
+	public static void main(String []args){
+
+		LinkedHashMap<Integer,String> lhm = new LinkedHashMap<Integer,String>();
+		lhm.put(4,"Mrunali");
+		lhm.put(7,"Swara");
+		lhm.put(22,"Pranav");
+		lhm.put(18,"Shubham");
+
+		HashMap<Integer,String> hm = new HashMap<Integer,String>();
+		hm.put(4,"Mrunali");
+		hm.put(7,"Swara");
+		hm.put(22,"Pranav");
+		hm.put(18,"Shubham");
+
+		System.out.println("LinkedHashMap : "+lhm);
+		System.out.println("HashMap : "+hm);
+	}
+}
+
+
+
+//*********************** Class WeakHashMap ***********************
+
+/*
+	Class : WeakHashMap<K,V>
+	Extends : AbstractMap
+	Implements : Map
+	Parameters : K - Type of Keys, V - Type of Values
+
+	->Child class of AbstractMap. Methods and constructors are almost same as HashMap except:
+		* HashMap dominates garbage collector. If an object doesn't have any reference, it is not eligible for garbage collector. 
+		* Garbage collector dominates WeakHashMap. If object doesn't have any reference, it is eligible for garbage collector
+*/
+
+//*********************** WeakHashMap Demo ***********************
+
+import java.util.*;
+
+class WeakHashMapDemo{
+	public static void main(String []args){
+
+		String str1 = new String("One");
+		WeakHashMap<String,String> whm = new WeakHashMap<String,String>();
+		whm.put(str1,"Animesh");
+		str1 = null;					//String is dereferenced
+		System.gc();					//Garbage collector is called, entry removed from WeakHashMap
+		System.out.println("WeakHashMap : "+whm);		
+
+		String str2 = new String("One");
+		HashMap<String,String> hm = new HashMap<String,String>();
+		hm.put(str2,"Animesh");				//String is dereferenced
+		str2 = null;					//Garbage collector is called, entry isn't removed from HashMap
+		System.gc();
+		System.out.println("HashMap : "+hm);
+	}
+}
+
+//!!!!!!!!!!!!!!!!!! ConcurrentHashMap refer from here - https://www.geeksforgeeks.org/concurrenthashmap-in-java/ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+Prerequisites:Need of ConcurrentMap
+ConcurrentHashMap ConcurrentHashMap class is introduced in JDK 1.5, which implements ConcurrentMap as well as Serializable interface also. ConcureentHashMap is enhancement of HashMap as we know that while dealing with Threads in our application HashMap is not a good choice because performance wise HashMap is not upto the mark.
+
+Key points of ConcurrentHashMap:
+
+The underlined data structure for ConcurrentHashMap is Hashtable.
+ConcurrentHashMap class is thread-safe i.e. multiple thread can operate on a single object without any complications.
+At a time any number of threads are applicable for read operation without locking the ConcurrentHashMap object which is not there in HashMap.
+In ConcurrentHashMap, the Object is divided into number of segments according to the concurrency level.
+Default concurrency-level of ConcurrentHashMap is 16.
+In ConcurrentHashMap, at a time any number of threads can perform retrieval operation but for updation in object, thread must lock the particular segment in which thread want to operate.This type of locking mechanism is known as Segment locking or bucket locking.Hence at a time 16 updation operations can be performed by threads.
+null insertion is not possible in ConcurrentHashMap as key or value.
+Constructors of ConcurrentHashMap:
+
+
+
+ConcurrentHashMap m=new ConcurrentHashMap();:Creates a new, empty map with a default initial capacity (16), load factor (0.75) and concurrencyLevel (16).
+ConcurrentHashMap m=new ConcurrentHashMap(int initialCapacity);:Creates a new, empty map with the specified initial capacity, and with default load factor (0.75) and concurrencyLevel (16).
+ConcurrentHashMap m=new ConcurrentHashMap(int initialCapacity, float loadFactor);:
+Creates a new, empty map with the specified initial capacity and load factor and with the default concurrencyLevel (16).
+ConcurrentHashMap m=new ConcurrentHashMap(int initialCapacity, float loadFactor, int concurrencyLevel);:Creates a new, empty map with the specified initial capacity, load factor and concurrency level.
+ConcurrentHashMap m=new ConcurrentHashMap(Map m);:Creates a new map with the same mappings as the given map.
+filter_none
+edit
+play_arrow
+
+brightness_4
+// Java program to demonstrate working of ConcurrentHashMap 
+import java.util.concurrent.*; 
+class ConcurrentHashMapDemo { 
+    public static void main(String[] args) 
+    { 
+        ConcurrentHashMap m = new ConcurrentHashMap(); 
+        m.put(100, "Hello"); 
+        m.put(101, "Geeks"); 
+        m.put(102, "Geeks"); 
+  
+        // Here we cant add Hello because 101 key 
+        // is already present in ConcurrentHashMap object 
+        m.putIfAbsent(101, "Hello"); 
+  
+        // We can remove entry because 101 key 
+        // is associated with For value 
+        m.remove(101, "Geeks"); 
+  
+        // Now we can add Hello 
+        m.putIfAbsent(103, "Hello"); 
+  
+        // We cant replace Hello with For 
+        m.replace(101, "Hello", "For"); 
+        System.out.println(m); 
+    } 
+} 
+Output:
+
+{100=Hello, 102=Geeks, 103=Hello}
